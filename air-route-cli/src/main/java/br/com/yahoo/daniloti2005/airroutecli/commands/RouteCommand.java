@@ -1,5 +1,6 @@
 package br.com.yahoo.daniloti2005.airroutecli.commands;
 
+import br.com.daniloti2005.air_route_commons.interpreter.dijkstra.DijkstraAlgorithm;
 import br.com.daniloti2005.air_route_commons.interpreter.dijkstra.Edge;
 import br.com.daniloti2005.air_route_commons.interpreter.dijkstra.Node;
 import br.com.daniloti2005.air_route_commons.interpreter.dijkstra.Route;
@@ -9,6 +10,8 @@ import br.com.yahoo.daniloti2005.airroutecli.service.RouteService;
 import br.com.yahoo.daniloti2005.airroutecli.singleton.RouteSingleton;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellComponent;
+
+import java.util.List;
 
 @ShellComponent
 public class RouteCommand {
@@ -62,7 +65,6 @@ public class RouteCommand {
     @ShellMethod("Save to File on Path")
     public String saveToFile() throws Exception {
         FileService service = new FileService(AirRouteCliApplication.path);
-        br.com.daniloti2005.air_route_commons.singleton.route.RouteSingleton.get
         service.save(AirRouteCliApplication.path);
         return "Created on "+AirRouteCliApplication.path;
     }
@@ -72,5 +74,52 @@ public class RouteCommand {
         RouteSingleton.reset();
         return "Reset!";
     }
+
+    @ShellMethod("Run dijkstra to discover lower cost between two points ")
+    public String run(String beginning, String ending) {
+        if (beginning.isEmpty())
+            return "beginning is empty";
+        if (ending.isEmpty())
+            return "ending is empty";
+
+        DijkstraAlgorithm.initialization(RouteSingleton.getRoute().getNodeFromMap(beginning),
+                RouteSingleton.getRoute().getNodeFromMap(ending),
+                RouteSingleton.getRoute());
+
+        RouteSingleton.setResult(DijkstraAlgorithm.perform());
+
+        return "Minor way found from "+beginning+" to "+ending
+                +" it is: "
+                +RouteSingleton.getResult().get(RouteSingleton.getResult().size()-1).getDistanceFromOrigin();
+
+    }
+
+    @ShellMethod("Show minor path discovered by Dijkstra algorithm ")
+    public String showMinorPath() {
+        String ret = "Beginning: \n";
+        try {
+
+            for (Node item : RouteSingleton.getResult()) {
+                ret += " |- "+item.getName()+"\n"+"  - distance from Origin: "
+                        +item.getDistanceFromOrigin()+"\n"
+                        +"  - distance from Previous: "+item.getDistanceFromPrevious()+"\n";
+            }
+            ret+="\n End";
+
+        } catch (Exception e){
+            return "Please add Node and Perform before show results";
+        }
+        return ret;
+
+
+    }
+
+    @ShellMethod("About air-route-cli")
+    public String about() {
+        return "Author: Danilo C. Ferreira\n"
+                +"GNU License\n"+"27/01/2021";
+    }
+
+
 
 }
