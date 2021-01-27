@@ -116,7 +116,7 @@ public class RouteCommand {
 
     @ShellMethod("About air-route-cli")
     public String about() {
-        return "Author: Danilo C. Ferreira\n"
+        return "Author: Danilo Carrenho Ferreira\n"
                 +"GNU License\n"+"27/01/2021";
     }
 
