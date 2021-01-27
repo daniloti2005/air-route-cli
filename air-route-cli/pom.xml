@@ -35,6 +35,15 @@
 			<artifactId>spring-shell-starter</artifactId>
 			<version>2.0.0.RELEASE</version>
 		</dependency>
+
+		<dependency>
+			<groupId>br.com.daniloti2005.air_route_commons</groupId>
+			<artifactId>air_route_commons</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/air-route-commons-workspace.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>

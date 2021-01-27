@@ -1,6 +1,8 @@
 package br.com.yahoo.daniloti2005.airroutecli.singleton;
 
 
+import br.com.daniloti2005.air_route_commons.interpreter.dijkstra.Route;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,8 @@ public final class RouteSingleton {
     
     private static RouteSingleton INSTANCE;
     private static String info = "This class is responsible to create a Route´s Pool";
-    private static List<String> lstRoute;
+    private static Route route;
+
 
     /***
      * Constructor doing nothing :)
@@ -36,11 +39,11 @@ public final class RouteSingleton {
     /***
      * set a Route to this Singleton pool.
      */
-    public static void setRoute(String route){
-        if (lstRoute == null) {
-            lstRoute = new ArrayList<>();
+    public static void setRoute(Route initRoute){
+        if (route == null) {
+            route = new Route();
             try {
-                lstRoute.add(route.toString());
+                route = initRoute;
             } catch (Exception exception) {
                 throw exception;
             }
@@ -52,8 +55,8 @@ public final class RouteSingleton {
      * get a list of Routes.
      * @return
      */
-    public static List<String> getListRoutes() {
-        return lstRoute;
+    public static Route getRoute() {
+        return route;
     }
 
 
@@ -61,7 +64,7 @@ public final class RouteSingleton {
      * Reset Route's pool.
      */
     public static void reset() {
-        lstRoute.clear();
+        route = null;
     }
 
     /***
