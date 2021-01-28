@@ -15,7 +15,7 @@ public class AirRouteCliApplication {
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(AirRouteCliApplication.class);
 		LogManager.getLogManager().reset();
-		path = args[0];
+		if (args.length != 0) { path = args[0];}
 		app.run(args);
 	}
 
