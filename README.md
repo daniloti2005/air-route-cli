@@ -85,8 +85,8 @@ Route Command
 shell:>
  ```
  * Step by step to perform
- - load-file Obs: to upload file passed as parameter.
- - list. Obs: to check file uploaded.
+ - load-file  -> to upload file passed as parameter.
+ - list ->  Obs: to check file uploaded.
  - run. -> to perform dijkstra between two point. It is mandatory pass arguments in this order : origin destination
  - show-minor-path -> show complete show path solved by dijkstra
 
